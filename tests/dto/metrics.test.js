@@ -61,11 +61,11 @@ describe('toSmeMetricsResponse', () => {
     expect(result).toEqual({ open: 3, funded: 1, settled: 2, defaulted: 0 });
   });
 
-  it('coerces float values to integers (truncation via Number())', () => {
+  it('coerces float values to integers via floor', () => {
     const result = toSmeMetricsResponse({ open: 2.7, funded: 1.2, settled: 3.9, defaulted: 0.1 });
-    // Number() does not truncate; fields are coerced via Number() || 0
-    expect(result.open).toBe(2.7);
-    expect(result.funded).toBe(1.2);
+    // _coerceCount floors floats to integers
+    expect(result.open).toBe(2);
+    expect(result.funded).toBe(1);
   });
 
   it('treats non-numeric string values as 0', () => {
